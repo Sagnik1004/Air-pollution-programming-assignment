@@ -1,0 +1,23 @@
+corr<- function(directory, threshold){
+  #setwd(directory)
+  a<- list.files()
+  dataset<- data.frame(Date= c(), sulfate= c(), nitrate=c(), ID= c() )
+  b<- c()
+  c<- c()
+  for (i in a) {
+    data<-read.csv(i)
+    data<- rbind(dataset, data)
+    good<- complete.cases(data)
+    complete_data<- data[good,]
+    complete_cases<- nrow(complete_data)
+    if (complete_cases>= threshold){
+      cr<- cor(complete_data$sulfate, complete_data$nitrate)
+      b= append(b, cr)
+    }
+  }
+  print(b)
+  
+}
+
+corr('specdata', 400)
+summary(corr('specdata', 400))
