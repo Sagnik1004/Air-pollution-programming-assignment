@@ -1,0 +1,23 @@
+complete<- function(directory, id){
+  #setwd(directory)
+  a<- list.files()
+  dataset<- data.frame(Date= c(), sulfate= c(), nitrate=c(), ID= c() )
+  
+  ob<- c()
+  ID<- c()
+  for (i in id) {
+    data<-read.csv(a[i])
+    data<- rbind(dataset, data)
+    good<- complete.cases(data)
+    complete_data<- data[good,]
+    
+    ob= append(ob, nrow(complete_data))
+    ID= append(ID, i)
+  }
+  print(ob)
+  print(ID)
+  output<- data.frame(id=ID, nobs=ob)
+  print(output)
+}
+
+complete('specdata', c(2, 4, 8, 10, 12))
